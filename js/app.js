@@ -182,6 +182,11 @@ export function setupRevealAnimations() {
   );
 
   elements.forEach((item) => observer.observe(item));
+
+  // Fail-safe: never leave sections hidden if observer callbacks are blocked.
+  window.setTimeout(() => {
+    elements.forEach((item) => item.classList.add("show"));
+  }, 900);
 }
 
 function animateCounter(node, targetValue) {

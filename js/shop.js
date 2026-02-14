@@ -1,4 +1,4 @@
-import { config, deepLinkToWhatsapp, invokeFunction, supabase } from "../supabase/config.js";
+import { config, deepLinkToWhatsapp, invokeFunction, isConfigReady, supabase } from "../supabase/config.js";
 import {
   appState,
   formatMoney,
@@ -14,6 +14,14 @@ const shopState = {
   products: [],
   selectedProduct: null
 };
+
+const SAMPLE_PRODUCTS = [
+  { id: "sample-1", name: "Weekly Pass", diamond_amount: 220, base_price_usd: 2.99, active: true },
+  { id: "sample-2", name: "Diamond Pack S", diamond_amount: 275, base_price_usd: 4.99, active: true },
+  { id: "sample-3", name: "Diamond Pack M", diamond_amount: 565, base_price_usd: 9.49, active: true },
+  { id: "sample-4", name: "Diamond Pack L", diamond_amount: 1159, base_price_usd: 18.99, active: true },
+  { id: "sample-5", name: "Diamond Pack XL", diamond_amount: 2398, base_price_usd: 38.49, active: true }
+];
 
 function renderProducts() {
   const container = document.getElementById("packageGrid");
@@ -75,17 +83,32 @@ function renderSelectedPackage() {
 }
 
 async function loadProducts() {
-  const { data, error } = await supabase
-    .from("products")
-    .select("id, name, diamond_amount, base_price_usd, active")
-    .eq("active", true)
-    .order("diamond_amount", { ascending: true });
-
-  if (error) {
-    throw error;
+  if (!isConfigReady) {
+    shopState.products = [...SAMPLE_PRODUCTS];
+    renderProducts();
+    return;
   }
 
-  shopState.products = data || [];
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select("id, name, diamond_amount, base_price_usd, active")
+      .eq("active", true)
+      .order("diamond_amount", { ascending: true });
+
+    if (error) {
+      throw error;
+    }
+
+    shopState.products = data?.length ? data : [...SAMPLE_PRODUCTS];
+    if (!data?.length) {
+      showToast("No products found in DB. Showing sample packages.", "info", 5000);
+    }
+  } catch (error) {
+    shopState.products = [...SAMPLE_PRODUCTS];
+    showToast("Could not load products from backend. Showing sample packages.", "error", 5000);
+  }
+
   renderProducts();
 }
 
@@ -113,6 +136,10 @@ function setupTopupForm() {
     try {
       if (!shopState.selectedProduct) {
         throw new Error("Please select a diamond package.");
+      }
+
+      if (!isConfigReady || shopState.selectedProduct.id.startsWith("sample-")) {
+        throw new Error("Backend is not fully configured yet. Sample packages are visible for preview only.");
       }
 
       const playerId = form.querySelector("#playerId")?.value.trim();
@@ -187,6 +214,11 @@ function setupTopupForm() {
 async function loadRecentOrders() {
   const list = document.getElementById("recentOrders");
   if (!list) {
+    return;
+  }
+
+  if (!isConfigReady) {
+    list.innerHTML = `<p class='label'>Connect Supabase to load real order history.</p>`;
     return;
   }
 
