@@ -44,8 +44,43 @@
     </header>
 
     <main>
+      <section class="dashboard-hero glass" data-animate>
+        <img
+          id="dashboardHeroImage"
+          class="dashboard-hero-image"
+          src="https://wallpaper.forfun.com/fetch/5a/5afff343a73e3f4570023dd031668fc8.jpeg"
+          alt="Mobile Legends hero artwork"
+          loading="lazy"
+        />
+        <div class="dashboard-hero-content">
+          <span id="dashboardModePill" class="badge pending">Demo Mode</span>
+          <h1>Player Command Center</h1>
+          <p id="dashboardModeText">Switch between demo preview and your live account data.</p>
+          <div class="mode-toggle">
+            <button id="modeLiveBtn" type="button" class="mode-btn">Live Data</button>
+            <button id="modeDemoBtn" type="button" class="mode-btn active">Demo Preview</button>
+          </div>
+        </div>
+      </section>
+
       <section class="section" data-animate>
         <h2>User Profile</h2>
+        <article class="card glass profile-feature-card">
+          <img
+            id="profileFeatureImage"
+            class="profile-feature-image"
+            src="https://wallpaper.forfun.com/fetch/5a/5afff343a73e3f4570023dd031668fc8.jpeg"
+            alt="Mobile Legends profile banner"
+            loading="lazy"
+          />
+          <div>
+            <p class="label">Account Snapshot</p>
+            <h3 style="margin: 0.15rem 0 0.45rem">Battle-ready wallet, referrals, and order tracking</h3>
+            <p class="label" style="margin: 0">
+              You can preview all sections in demo mode and switch to live mode once Supabase credentials are connected.
+            </p>
+          </div>
+        </article>
         <div class="grid three">
           <article class="card glass">
             <div class="label">Email</div>

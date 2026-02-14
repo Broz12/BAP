@@ -129,10 +129,37 @@ function setupSignupForm() {
   });
 }
 
+function setupDemoOnlyAuthForms() {
+  const loginForm = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      showToast("Connect Supabase config in js/runtime-config.js to enable login.", "info", 5000);
+    });
+  }
+
+  if (signupForm) {
+    signupForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      showToast("Connect Supabase config in js/runtime-config.js to enable signup.", "info", 5000);
+    });
+  }
+}
+
 export async function initAuthPage() {
   captureReferralCodeFromUrl();
   const ready = await initBasePage({ requireAuth: false });
+
+  document.querySelectorAll("[data-auth-tab]").forEach((button) => {
+    button.addEventListener("click", () => toggleAuthTab(button.dataset.authTab));
+  });
+
+  toggleAuthTab("login");
+
   if (!ready) {
+    setupDemoOnlyAuthForms();
     return;
   }
 
@@ -141,12 +168,6 @@ export async function initAuthPage() {
     window.location.href = "dashboard.html";
     return;
   }
-
-  document.querySelectorAll("[data-auth-tab]").forEach((button) => {
-    button.addEventListener("click", () => toggleAuthTab(button.dataset.authTab));
-  });
-
-  toggleAuthTab("login");
   setupLoginForm();
   setupSignupForm();
 }

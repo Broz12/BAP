@@ -120,6 +120,17 @@ export function setPreferredCurrency(currency) {
 }
 
 export async function loadExchangeRates() {
+  if (!isConfigReady) {
+    appState.ratesToUsd = {
+      USD: 1,
+      INR: 0.012,
+      PHP: 0.018,
+      IDR: 0.000064,
+      MYR: 0.22
+    };
+    return appState.ratesToUsd;
+  }
+
   const { data, error } = await supabase
     .from("exchange_rates")
     .select("currency_code, rate_to_usd, updated_at")
