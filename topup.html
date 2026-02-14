@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top-Up | MLBB Pro Top-Up</title>
+    <meta name="description" content="Select diamond packages and pay securely via Stripe or wallet." />
+
+    <meta name="supabase-url" content="" />
+    <meta name="supabase-anon-key" content="" />
+    <meta name="stripe-publishable-key" content="" />
+    <meta name="app-base-url" content="" />
+    <meta name="admin-whatsapp-number" content="" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/runtime-config.js"></script>
+  </head>
+  <body>
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="spinner" aria-label="Loading"></div>
+    </div>
+
+    <header class="navbar">
+      <div class="inner">
+        <a href="index.html" class="brand">
+          <span class="brand-mark">◆</span>
+          <span>MLBB Pro Top-Up</span>
+        </a>
+        <nav class="nav-links">
+          <a data-nav-link href="index.html">Home</a>
+          <a data-nav-link href="topup.html">Top-Up</a>
+          <a data-nav-link href="dashboard.html">Dashboard</a>
+          <a data-nav-link href="admin.html">Admin</a>
+          <span id="walletBadge" class="wallet-badge hidden"></span>
+          <button data-logout class="btn secondary">Logout</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" data-animate>
+        <h2>Diamond Top-Up</h2>
+        <div class="grid two">
+          <article class="glass card">
+            <div class="inline-actions" style="justify-content: space-between; align-items: center">
+              <h3 style="margin: 0">Choose Package</h3>
+              <select id="currencySelect" class="select" style="max-width: 120px"></select>
+            </div>
+            <p class="label">Prices are converted in real-time based on cached exchange rates.</p>
+            <div id="packageGrid" class="package-grid"></div>
+          </article>
+
+          <article class="glass card">
+            <h3 style="margin-top: 0">Order Details</h3>
+            <p class="label" id="selectedPackage">No package selected</p>
+            <form id="topupForm" class="form-row">
+              <div>
+                <label for="playerId" class="label">Player ID</label>
+                <input class="input" id="playerId" inputmode="numeric" placeholder="123456789" required />
+              </div>
+
+              <div>
+                <label for="serverId" class="label">Server ID</label>
+                <input class="input" id="serverId" inputmode="numeric" placeholder="1234" required />
+              </div>
+
+              <div>
+                <span class="label">Payment Method</span>
+                <div class="inline-actions">
+                  <label class="chip"><input type="radio" name="paymentMethod" value="stripe" checked /> Stripe</label>
+                  <label class="chip"><input type="radio" name="paymentMethod" value="wallet" /> Wallet</label>
+                </div>
+              </div>
+
+              <button type="submit" class="btn">Place Order</button>
+            </form>
+
+            <a id="whatsappFallbackBtn" class="btn secondary hidden" target="_blank" rel="noopener noreferrer" style="margin-top: 0.75rem">
+              Notify Admin via WhatsApp (Fallback)
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-animate>
+        <h2>Recent Orders</h2>
+        <div id="recentOrders" class="grid"></div>
+      </section>
+    </main>
+
+    <div class="mobile-bottom-nav">
+      <nav class="menu">
+        <a data-nav-link href="index.html">Home</a>
+        <a data-nav-link href="topup.html">Top-Up</a>
+        <a data-nav-link href="dashboard.html">Dashboard</a>
+        <a data-nav-link href="admin.html">Admin</a>
+      </nav>
+    </div>
+
+    <footer class="footer-note">
+      <p><strong>Disclaimer:</strong> This website is not affiliated with Moonton or Mobile Legends.</p>
+    </footer>
+
+    <script type="module">
+      import { initTopupPage } from "./js/shop.js";
+      initTopupPage();
+    </script>
+  </body>
+</html>

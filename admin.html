@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | MLBB Pro Top-Up</title>
+
+    <meta name="supabase-url" content="" />
+    <meta name="supabase-anon-key" content="" />
+    <meta name="stripe-publishable-key" content="" />
+    <meta name="app-base-url" content="" />
+    <meta name="admin-whatsapp-number" content="" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/runtime-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="inner">
+        <a href="index.html" class="brand">
+          <span class="brand-mark">◆</span>
+          <span>MLBB Pro Top-Up</span>
+        </a>
+        <nav class="nav-links">
+          <a data-nav-link href="index.html">Home</a>
+          <a data-nav-link href="topup.html">Top-Up</a>
+          <a data-nav-link href="dashboard.html">Dashboard</a>
+          <a data-nav-link href="admin.html">Admin</a>
+          <select id="currencySelect" class="select" style="max-width: 94px"></select>
+          <span id="walletBadge" class="wallet-badge hidden"></span>
+          <button data-logout class="btn secondary">Logout</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" data-animate>
+        <h2>Revenue Analytics</h2>
+        <div class="grid three">
+          <article class="stat-card">
+            <div class="stat-label">Total Revenue (USD)</div>
+            <div id="totalRevenue" class="stat-value">$0.00</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">Total Orders</div>
+            <div id="totalOrders" class="stat-value">0</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">Open Queue</div>
+            <div id="pendingOrders" class="stat-value">0</div>
+          </article>
+        </div>
+        <article class="card glass" style="margin-top: 1rem">
+          <canvas id="revenueChart" height="130"></canvas>
+        </article>
+      </section>
+
+      <section class="section" data-animate>
+        <h2>Live Processing Queue</h2>
+        <div class="card glass">
+          <div class="inline-actions" style="justify-content: space-between; margin-bottom: 0.75rem">
+            <div class="inline-actions">
+              <select id="statusFilter" class="select" style="max-width: 160px">
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+              <input id="playerSearch" class="input" placeholder="Search by Player ID" style="max-width: 220px" />
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>User</th>
+                  <th>Player</th>
+                  <th>Package</th>
+                  <th>Amount</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Set Status</th>
+                  <th>Admin Note</th>
+                </tr>
+              </thead>
+              <tbody id="orderQueueBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-animate>
+        <h2>Product Manager</h2>
+        <div class="grid two">
+          <article class="card glass">
+            <h3 style="margin-top: 0">Add / Edit Product</h3>
+            <form id="productForm" class="form-row">
+              <input id="productId" type="hidden" />
+              <div>
+                <label class="label" for="productName">Name</label>
+                <input id="productName" class="input" required />
+              </div>
+              <div>
+                <label class="label" for="productDiamonds">Diamond Amount</label>
+                <input id="productDiamonds" class="input" type="number" min="1" required />
+              </div>
+              <div>
+                <label class="label" for="productPriceUsd">Base Price (USD)</label>
+                <input id="productPriceUsd" class="input" type="number" min="0.1" step="0.01" required />
+              </div>
+              <label class="chip"><input id="productActive" type="checkbox" checked /> Active</label>
+              <button class="btn" type="submit">Save Product</button>
+            </form>
+          </article>
+
+          <article class="card glass table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Diamonds</th>
+                  <th>USD</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productBody"></tbody>
+            </table>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-animate>
+        <h2>Users</h2>
+        <article class="card glass table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Referral Code</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody id="usersBody"></tbody>
+          </table>
+        </article>
+      </section>
+    </main>
+
+    <div class="mobile-bottom-nav">
+      <nav class="menu">
+        <a data-nav-link href="index.html">Home</a>
+        <a data-nav-link href="topup.html">Top-Up</a>
+        <a data-nav-link href="dashboard.html">Dashboard</a>
+        <a data-nav-link href="admin.html">Admin</a>
+      </nav>
+    </div>
+
+    <footer class="footer-note">
+      <p><strong>Disclaimer:</strong> This website is not affiliated with Moonton or Mobile Legends.</p>
+    </footer>
+
+    <script type="module">
+      import { initAdminPage } from "./js/admin.js";
+      initAdminPage();
+    </script>
+  </body>
+</html>

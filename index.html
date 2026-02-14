@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MLBB Pro Top-Up | Premium Mobile Legends Diamond Service</title>
+    <meta name="description" content="Premium Mobile Legends diamond top-up platform with secure payments, wallet, referral rewards, and live order tracking." />
+
+    <meta name="supabase-url" content="" />
+    <meta name="supabase-anon-key" content="" />
+    <meta name="stripe-publishable-key" content="" />
+    <meta name="app-base-url" content="" />
+    <meta name="admin-whatsapp-number" content="" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./js/runtime-config.js"></script>
+  </head>
+  <body>
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="spinner" aria-label="Loading"></div>
+    </div>
+
+    <header class="navbar">
+      <div class="inner">
+        <a href="index.html" class="brand" aria-label="MLBB Pro Top-Up home">
+          <span class="brand-mark">◆</span>
+          <span>MLBB Pro Top-Up</span>
+        </a>
+
+        <nav class="nav-links">
+          <a data-nav-link href="index.html">Home</a>
+          <a data-nav-link href="topup.html">Top-Up</a>
+          <a data-nav-link href="dashboard.html">Dashboard</a>
+          <a data-nav-link href="admin.html">Admin</a>
+          <span id="walletBadge" class="wallet-badge hidden"></span>
+          <button data-auth-only data-logout class="btn secondary hidden">Logout</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero glass" data-animate>
+        <div class="hero-copy">
+          <span class="hero-kicker">Elite Gaming Recharge Service</span>
+          <h1>
+            Secure <span class="accent">Mobile Legends</span><br />
+            Diamonds in Seconds
+          </h1>
+          <p>
+            Register, select your package, and pay via Stripe or wallet. Orders are queued instantly for admin processing,
+            with invoice automation and WhatsApp alerts.
+          </p>
+          <div class="hero-cta">
+            <a href="topup.html" class="btn">Start Top-Up</a>
+            <a href="#authSection" class="btn secondary">Login / Register</a>
+          </div>
+          <div class="chip-group">
+            <span class="chip">Stripe Payments</span>
+            <span class="chip">Wallet + Referral Rewards</span>
+            <span class="chip">Live Order Tracking</span>
+          </div>
+        </div>
+
+        <div id="hero3d" aria-label="Animated 3D diamond scene"></div>
+      </section>
+
+      <section class="section" id="authSection" data-animate>
+        <h2>Account Access</h2>
+        <div class="auth-wrap">
+          <article class="auth-panel glass">
+            <div class="auth-tabs">
+              <button type="button" class="auth-tab" data-auth-tab="login">Login</button>
+              <button type="button" class="auth-tab" data-auth-tab="signup">Sign Up</button>
+            </div>
+
+            <form id="loginForm" class="form-row">
+              <div>
+                <label for="loginEmail" class="label">Email</label>
+                <input id="loginEmail" class="input" type="email" autocomplete="email" required />
+              </div>
+              <div>
+                <label for="loginPassword" class="label">Password</label>
+                <input id="loginPassword" class="input" type="password" autocomplete="current-password" required />
+              </div>
+              <button type="submit" class="btn">Login</button>
+            </form>
+
+            <form id="signupForm" class="form-row hidden">
+              <div>
+                <label for="signupEmail" class="label">Email</label>
+                <input id="signupEmail" class="input" type="email" autocomplete="email" required />
+              </div>
+              <div>
+                <label for="signupPassword" class="label">Password</label>
+                <input id="signupPassword" class="input" type="password" autocomplete="new-password" minlength="8" required />
+              </div>
+              <div>
+                <label for="signupConfirmPassword" class="label">Confirm Password</label>
+                <input id="signupConfirmPassword" class="input" type="password" autocomplete="new-password" minlength="8" required />
+              </div>
+              <button type="submit" class="btn">Create Account</button>
+            </form>
+          </article>
+
+          <article class="glass auth-panel">
+            <h3 style="margin-top: 0">Why MLBB Pro Top-Up</h3>
+            <div class="grid" style="gap: 0.8rem">
+              <div class="card">
+                <strong>Secure Checkout</strong>
+                <p class="label">Stripe session-based checkout with webhook verification and anti-duplicate processing.</p>
+              </div>
+              <div class="card">
+                <strong>Wallet + Referral</strong>
+                <p class="label">Deposit funds and earn 5% commission from successful paid orders of referred users.</p>
+              </div>
+              <div class="card">
+                <strong>Admin Queue</strong>
+                <p class="label">Paid orders instantly appear in processing queue with notes and status tracking.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-animate>
+        <h2>Platform Stats</h2>
+        <div class="grid three">
+          <article class="stat-card">
+            <div class="stat-label">Supported Currencies</div>
+            <div class="stat-value" data-counter="5">0</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">Payment Methods</div>
+            <div class="stat-value" data-counter="2">0</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-label">Core Automation Flows</div>
+            <div class="stat-value" data-counter="6">0</div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+      <nav class="menu">
+        <a data-nav-link href="index.html">Home</a>
+        <a data-nav-link href="topup.html">Top-Up</a>
+        <a data-nav-link href="dashboard.html">Dashboard</a>
+        <a data-nav-link href="admin.html">Admin</a>
+      </nav>
+    </div>
+
+    <footer class="footer-note">
+      <p><strong>Disclaimer:</strong> This website is not affiliated with Moonton or Mobile Legends.</p>
+    </footer>
+
+    <script type="module">
+      import { initCounters } from "./js/app.js";
+      import { initAuthPage } from "./js/auth.js";
+      import { initHero3D } from "./js/three-hero.js";
+
+      initAuthPage();
+      initCounters();
+      initHero3D();
+    </script>
+  </body>
+</html>
