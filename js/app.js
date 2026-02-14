@@ -298,7 +298,11 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
   setPreferredCurrency(getPreferredCurrency());
 
   if (!isConfigReady) {
-    showToast(CONFIG_ERROR_MESSAGE, "error", 7000);
+    const shouldWarn = requireAuth || requireAdmin;
+    if (shouldWarn && !sessionStorage.getItem("mlbb_config_warned")) {
+      showToast(CONFIG_ERROR_MESSAGE, "info", 6500);
+      sessionStorage.setItem("mlbb_config_warned", "1");
+    }
     return false;
   }
 

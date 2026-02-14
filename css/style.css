@@ -118,6 +118,7 @@ main {
   gap: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.4px;
+  white-space: nowrap;
 }
 
 .brand-mark {
@@ -135,9 +136,20 @@ main {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-links a {
+  white-space: nowrap;
 }
 
 .nav-links a.active,
@@ -195,6 +207,78 @@ main {
   min-height: 510px;
   overflow: hidden;
   padding: clamp(1.1rem, 3vw, 2.2rem);
+}
+
+.page-banner {
+  position: relative;
+  min-height: 260px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1rem;
+}
+
+.page-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(110deg, rgba(4, 10, 22, 0.9) 12%, rgba(4, 10, 22, 0.45) 58%, rgba(4, 10, 22, 0.85) 100%);
+}
+
+.page-banner-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.08) brightness(0.72);
+}
+
+.page-banner-content {
+  position: relative;
+  z-index: 2;
+  padding: clamp(1rem, 3vw, 2rem);
+  max-width: 680px;
+}
+
+.page-banner-content h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-family: "Orbitron", sans-serif;
+}
+
+.page-banner-content p {
+  margin: 0.55rem 0 0;
+  color: #d1dfeb;
+  max-width: 58ch;
+}
+
+.status-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.status-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(105deg, rgba(5, 12, 22, 0.9), rgba(5, 12, 22, 0.48));
+}
+
+.status-screen-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.62) saturate(1.05);
+}
+
+.status-screen > * {
+  position: relative;
+  z-index: 2;
 }
 
 .dashboard-hero {
@@ -336,6 +420,22 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: radial-gradient(circle at top, rgba(0, 245, 255, 0.12), rgba(15, 15, 15, 0.3));
   overflow: hidden;
+}
+
+#hero3d::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: linear-gradient(180deg, rgba(3, 10, 24, 0.5), rgba(3, 10, 24, 0.6)),
+    url("https://images.wallpapersden.com/image/download/mobile-legends-bang-bang-2021_bGtpbWeUmZqaraWkpJRmbmdlrWZlbWU.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+#hero3d canvas {
+  position: relative;
+  z-index: 1;
 }
 
 .section {
@@ -761,6 +861,27 @@ main {
 
   .grid.two {
     grid-template-columns: 1fr;
+  }
+
+  .page-banner {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .nav-links {
+    gap: 0.55rem;
+    font-size: 0.88rem;
+  }
+
+  .wallet-badge {
+    font-size: 0.78rem;
+    padding: 0.28rem 0.6rem;
+  }
+
+  .nav-links .btn,
+  .nav-links .select {
+    padding: 0.56rem 0.68rem;
   }
 }
 

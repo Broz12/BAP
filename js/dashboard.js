@@ -4,7 +4,8 @@ import { initCurrencySelector } from "./currency.js";
 import { initReferralSection } from "./referral.js";
 import { initWalletSection } from "./wallet.js";
 
-const HERO_IMAGE_URL = "https://wallpaper.forfun.com/fetch/5a/5afff343a73e3f4570023dd031668fc8.jpeg";
+const HERO_IMAGE_URL =
+  "https://images.wallpapersden.com/image/download/mobile-legends-bang-bang-2021_bGtpbWeUmZqaraWkpJRmbmdlrWZlbWU.jpg";
 
 const DEMO_PROFILE = {
   email: "demo@mlbb-pro.com",
