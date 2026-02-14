@@ -436,7 +436,10 @@ function setupOrderFilters() {
 }
 
 export async function initAdminPage() {
-  await initBasePage({ requireAuth: true, requireAdmin: true });
+  const ready = await initBasePage({ requireAuth: true, requireAdmin: true });
+  if (!ready) {
+    return;
+  }
   await initCurrencySelector({ selectorId: "currencySelect" });
 
   setupOrderFilters();

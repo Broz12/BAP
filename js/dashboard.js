@@ -94,7 +94,10 @@ async function fetchOrders() {
 }
 
 export async function initDashboardPage() {
-  await initBasePage({ requireAuth: true });
+  const ready = await initBasePage({ requireAuth: true });
+  if (!ready) {
+    return;
+  }
   await initCurrencySelector({ selectorId: "currencySelect" });
 
   renderProfile();

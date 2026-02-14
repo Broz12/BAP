@@ -226,7 +226,10 @@ async function loadRecentOrders() {
 }
 
 export async function initTopupPage() {
-  await initBasePage({ requireAuth: true });
+  const ready = await initBasePage({ requireAuth: true });
+  if (!ready) {
+    return;
+  }
 
   await initCurrencySelector({
     selectorId: "currencySelect",

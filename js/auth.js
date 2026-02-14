@@ -131,7 +131,10 @@ function setupSignupForm() {
 
 export async function initAuthPage() {
   captureReferralCodeFromUrl();
-  await initBasePage({ requireAuth: false });
+  const ready = await initBasePage({ requireAuth: false });
+  if (!ready) {
+    return;
+  }
 
   const { data } = await supabase.auth.getSession();
   if (data.session?.user) {

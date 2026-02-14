@@ -1,4 +1,4 @@
-import { supabase } from "../supabase/config.js";
+import { CONFIG_ERROR_MESSAGE, isConfigReady, supabase } from "../supabase/config.js";
 
 const CURRENCY_FALLBACK_BY_COUNTRY = {
   IN: "INR",
@@ -160,6 +160,12 @@ export function setupRevealAnimations() {
   if (!elements.length) {
     return;
   }
+  document.body.classList.add("animations-enabled");
+
+  if (!("IntersectionObserver" in window)) {
+    elements.forEach((item) => item.classList.add("show"));
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -275,6 +281,11 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
   setupRevealAnimations();
   setPreferredCurrency(getPreferredCurrency());
 
+  if (!isConfigReady) {
+    showToast(CONFIG_ERROR_MESSAGE, "error", 7000);
+    return false;
+  }
+
   await loadExchangeRates();
 
   const { data, error } = await supabase.auth.getSession();
@@ -287,7 +298,7 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
 
   if (requireAuth && !appState.user) {
     window.location.href = "index.html?toast=Please+login+to+continue";
-    return;
+    return false;
   }
 
   if (appState.user) {
@@ -296,11 +307,11 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
     if (requireAdmin && appState.profile?.role !== "admin") {
       showToast("Admin access required.", "error");
       window.location.href = "dashboard.html";
-      return;
+      return false;
     }
   } else if (requireAdmin) {
     window.location.href = "index.html?toast=Please+login+as+admin";
-    return;
+    return false;
   }
 
   renderAuthAwareUi();
@@ -328,6 +339,8 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
     }
     renderAuthAwareUi();
   });
+
+  return true;
 }
 
 export function preventDoubleSubmit(form, callback) {

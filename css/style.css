@@ -694,13 +694,13 @@ main {
   }
 }
 
-[data-animate] {
+.animations-enabled [data-animate] {
   opacity: 0;
   transform: translateY(12px);
   transition: opacity 500ms ease, transform 500ms ease;
 }
 
-[data-animate].show {
+.animations-enabled [data-animate].show {
   opacity: 1;
   transform: translateY(0);
 }

@@ -25,20 +25,56 @@ function readConfig() {
 
 export const config = Object.freeze(readConfig());
 
-if (!config.supabaseUrl || !config.supabaseAnonKey) {
-  // Keep this explicit so deploy misconfiguration fails loudly.
-  throw new Error("Missing Supabase configuration. Set SUPABASE_URL and SUPABASE_ANON_KEY.");
+export const CONFIG_ERROR_MESSAGE =
+  "Missing Supabase configuration. Set SUPABASE_URL and SUPABASE_ANON_KEY in js/runtime-config.js and redeploy.";
+
+export const isConfigReady = Boolean(config.supabaseUrl && config.supabaseAnonKey);
+
+function unconfiguredClient() {
+  const fail = () => {
+    throw new Error(CONFIG_ERROR_MESSAGE);
+  };
+
+  return {
+    from: fail,
+    rpc: fail,
+    storage: {
+      from: fail
+    },
+    auth: {
+      getSession: fail,
+      signOut: fail,
+      signInWithPassword: fail,
+      signUp: fail,
+      onAuthStateChange: () => ({
+        data: {
+          subscription: {
+            unsubscribe() {}
+          }
+        }
+      })
+    }
+  };
 }
 
-export const supabase = createClient(config.supabaseUrl, config.supabaseAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true
-  }
-});
+if (!isConfigReady) {
+  console.warn(CONFIG_ERROR_MESSAGE);
+}
+
+export const supabase = isConfigReady
+  ? createClient(config.supabaseUrl, config.supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    })
+  : unconfiguredClient();
 
 export async function getSession() {
+  if (!isConfigReady) {
+    throw new Error(CONFIG_ERROR_MESSAGE);
+  }
   const { data, error } = await supabase.auth.getSession();
   if (error) {
     throw error;
@@ -47,6 +83,9 @@ export async function getSession() {
 }
 
 export async function invokeFunction(name, payload, method = "POST") {
+  if (!isConfigReady) {
+    throw new Error(CONFIG_ERROR_MESSAGE);
+  }
   const session = await getSession();
   if (!session?.access_token) {
     throw new Error("You must be logged in.");

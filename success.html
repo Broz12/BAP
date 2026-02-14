@@ -76,7 +76,11 @@
       const sessionValue = document.getElementById("sessionValue");
       const invoiceBtn = document.getElementById("downloadInvoiceBtn");
 
-      await initBasePage({ requireAuth: true });
+      const ready = await initBasePage({ requireAuth: true });
+      if (!ready) {
+        orderStatusValue.textContent = "App config missing. Update js/runtime-config.js and redeploy.";
+        return;
+      }
 
       const params = new URLSearchParams(window.location.search);
       const sessionId = params.get("session_id");
