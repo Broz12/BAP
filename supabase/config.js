@@ -6,10 +6,11 @@ function meta(name) {
 
 function readConfig() {
   const runtime = window.__APP_CONFIG ?? {};
+  const inferredBaseUrl = new URL(".", window.location.href).href.replace(/\/$/, "");
   const supabaseUrl = runtime.SUPABASE_URL || meta("supabase-url");
   const supabaseAnonKey = runtime.SUPABASE_ANON_KEY || meta("supabase-anon-key");
   const stripePublishableKey = runtime.STRIPE_PUBLISHABLE_KEY || meta("stripe-publishable-key");
-  const appBaseUrl = runtime.APP_BASE_URL || meta("app-base-url") || window.location.origin;
+  const appBaseUrl = runtime.APP_BASE_URL || meta("app-base-url") || inferredBaseUrl;
   const functionsBaseUrl = runtime.SUPABASE_FUNCTIONS_URL || `${supabaseUrl}/functions/v1`;
 
   return {

@@ -2,7 +2,7 @@ window.__APP_CONFIG = {
   SUPABASE_URL: "",
   SUPABASE_ANON_KEY: "",
   STRIPE_PUBLISHABLE_KEY: "",
-  APP_BASE_URL: window.location.origin,
+  APP_BASE_URL: "",
   SUPABASE_FUNCTIONS_URL: "",
   ADMIN_WHATSAPP_NUMBER: ""
 };

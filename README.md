@@ -196,6 +196,13 @@ Fallback deep-link is generated as:
 4. Output directory: `.`
 5. Security headers are in `/Users/Jend X/BAP/vercel.json`.
 
+### GitHub Pages
+1. This repo includes workflow `/Users/Jend X/BAP/.github/workflows/deploy-pages.yml`.
+2. In GitHub repository settings: `Pages` -> `Source: GitHub Actions`.
+3. Push to `main`; workflow deploys site automatically.
+4. Expected URL format: `https://<username>.github.io/<repo>/`.
+5. Set `/Users/Jend X/BAP/js/runtime-config.js` values before deployment.
+
 ## Security Controls Included
 - Supabase RLS for all business tables.
 - Role-based access (`user`/`admin`) with protected admin operations.

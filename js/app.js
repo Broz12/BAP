@@ -286,7 +286,7 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
   appState.user = data.session?.user ?? null;
 
   if (requireAuth && !appState.user) {
-    window.location.href = "/index.html?toast=Please+login+to+continue";
+    window.location.href = "index.html?toast=Please+login+to+continue";
     return;
   }
 
@@ -295,11 +295,11 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
 
     if (requireAdmin && appState.profile?.role !== "admin") {
       showToast("Admin access required.", "error");
-      window.location.href = "/dashboard.html";
+      window.location.href = "dashboard.html";
       return;
     }
   } else if (requireAdmin) {
-    window.location.href = "/index.html?toast=Please+login+as+admin";
+    window.location.href = "index.html?toast=Please+login+as+admin";
     return;
   }
 
@@ -316,7 +316,7 @@ export async function initBasePage({ requireAuth = false, requireAdmin = false }
         showToast(signOutError.message, "error");
         return;
       }
-      window.location.href = "/index.html?toast=Logged+out+successfully";
+      window.location.href = "index.html?toast=Logged+out+successfully";
     });
   });
 

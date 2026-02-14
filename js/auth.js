@@ -61,7 +61,7 @@ function setupLoginForm() {
 
       await applyStoredReferralCode();
       showToast("Logged in successfully.", "success");
-      window.location.href = "/topup.html";
+      window.location.href = "topup.html";
     } catch (error) {
       showToast(error.message || "Login failed.", "error");
     } finally {
@@ -135,7 +135,7 @@ export async function initAuthPage() {
 
   const { data } = await supabase.auth.getSession();
   if (data.session?.user) {
-    window.location.href = "/dashboard.html";
+    window.location.href = "dashboard.html";
     return;
   }
 
